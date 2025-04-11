@@ -8,24 +8,26 @@ from settings import *
 
 class Snake:
     def __init__(self):
-        self.body = [Vector2(6, 9), Vector2(5, 9), Vector2(4, 9)]
-        self.direction = Vector2(1, 0)
+        self.body = [Vector2(6, 14), Vector2(5, 14), Vector2(4, 14)]
+        self.direction = Vector2(0, 0)
 
     def update(self):
-        self.body = self.body[:-1]
-        self.body.insert(0, self.body[0] + self.direction)
+        if self.direction != Vector2(0, 0):
+            self.body = self.body[:-1]
+            self.body.insert(0, self.body[0] + self.direction)
 
 
 class Food(pygame.sprite.Sprite):
     def __init__(self, pos, groups: pygame.sprite.AbstractGroup):
         super().__init__(groups)
         self.pos = pos
-        self.image = pygame.Surface((cell_size, cell_size))
-        self.image.fill((168,228,160))
+        self.image = pygame.image.load('images/food.png').convert_alpha()
+        self.image = pygame.transform.scale(self.image, (cell_size, cell_size))
         self.rect = self.image.get_rect(topleft=(self.pos.x * cell_size, self.pos.y * cell_size))
 
     def update(self):
         pass
+
 
 class Game:
     def __init__(self):
